@@ -1,4 +1,4 @@
-name: depoly-manifests
+name: deploy-manifests
 
 on:
   push:
@@ -6,7 +6,6 @@ on:
       - master
     paths: 
       - 'infra/**'
-      
       
 jobs:
   build:
