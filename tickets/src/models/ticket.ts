@@ -47,7 +47,9 @@ const ticketSchema = new mongoose.Schema(
     },
   }
 );
+// change the v__ to version (automatically generated when you save())
 ticketSchema.set("versionKey", "version");
+//The plugin manages concurrency when a document is updated using Document.save()
 ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {

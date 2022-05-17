@@ -37,7 +37,7 @@ const start = async () => {
       console.log("NATS connection closed!");
       process.exit();
     });
-
+    // if the service is disconnected, close it directly 
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
     // Listen to new Order created

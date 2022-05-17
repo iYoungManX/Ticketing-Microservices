@@ -24,9 +24,12 @@ export abstract class Listener<T extends Event> {
   subscriptionOptions() {
     return this.client
       .subscriptionOptions()
+      //Event Redelivery
       .setDeliverAllAvailable()
+       //Ack 确认 mode
       .setManualAckMode(true)
       .setAckWait(this.ackWait)
+      //持久 Subscription 订阅
       .setDurableName(this.queueGroupName);
   }
 
@@ -39,12 +42,12 @@ export abstract class Listener<T extends Event> {
 
     subsciption.on("message", (msg: Message) => {
       console.log(`Message received: ${this.subject} /${this.queueGroupName}`);
-
+      
       const parseData = this.parseMessage(msg);
       this.onMessage(parseData, msg);
     });
   }
-
+   // parse to JSON format
   parseMessage(msg: Message) {
     const data = msg.getData();
     return typeof data == "string"

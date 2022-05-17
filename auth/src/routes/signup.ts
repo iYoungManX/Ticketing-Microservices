@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 import { validateRequest,BadRequestError } from "@iyoungman/common";
 import { body } from "express-validator";
 
-//import { DatabaseConnectionError } from "../errors/database-connection-error";
 const router = express.Router();
 
 router.post(
   "/api/users/signup",
+  // do similar form validation as signed in 
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")
@@ -26,7 +26,7 @@ router.post(
     if (existingUser) {
       throw new BadRequestError("Email in use");
     }
-
+    // user self defined build method to create new users
     const user = User.build({ email, password });
     await user.save();
 

@@ -15,7 +15,9 @@ const router = express.Router();
 
 router.put(
   "/api/tickets/:id",
+  // validate jwt and see if currentUser exists
   requireAuth,
+  // validate fill in form
   [
     body("title").not().isEmpty().withMessage("Title is required"),
     body("price")
@@ -32,7 +34,7 @@ router.put(
     if(ticket.orderId){
       throw new BadRequestError('Cannot edit a reserved ticket');
     }
-
+    // cannot update other people's ticket
     if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
@@ -42,6 +44,7 @@ router.put(
       price: req.body.price,
     });
     await ticket.save();
+    // finish updating publish th event
 
    new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,

@@ -10,12 +10,17 @@ import { signupRouter } from "./routes/signup";
 import { signoutRouter } from "./routes/sginout";
 import { errorHandler,NotFoundError  } from "@iyoungman/common";
 const app = express();
+// ?????
 app.set("trust proxy", true);
+// parse the req by json
 app.use(json());
+// parse the cookie and session
 app.use(
   cookieSession({
+    // if the cookie is signed?
     signed: false,
-    secure: process.env.NODE_ENV!=='test',
+    // do we only accept https?
+    secure: false,
   })
 );
 app.use(currentUserRouter);

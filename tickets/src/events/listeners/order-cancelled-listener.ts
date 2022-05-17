@@ -5,7 +5,7 @@ import { Ticket } from "../../models/ticket";
 import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 export class OrderCancelledListener extends Listener<OrderCancelledEvent> {
   subject: Subjects.OrderCancelled = Subjects.OrderCancelled;
-  queueGroupName: string = queueGroupName;
+  queueGroupName: string = queueGroupName;  // "ticket-services"
 
   async onMessage(data: OrderCancelledEvent["data"], msg: Message) {
     // Find the ticket that the order is reserving

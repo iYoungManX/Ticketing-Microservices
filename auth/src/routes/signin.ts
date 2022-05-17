@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post(
   "/api/users/signin",
+  // do validation
   [
     body("email").isEmail().withMessage("Email must be valid"),
     body("password")
@@ -15,7 +16,10 @@ router.post(
       .notEmpty()
       .withMessage("You must supply a password"),
   ],
+  // get the validation result and return it
   validateRequest,
+  // if the form is validated, check if the user exist
+  // by searching email and compare the password
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -33,12 +37,14 @@ router.post(
       throw new BadRequestError("Invalid credentials");
     }
 
-
+    // generate the jwt 
     const userJwt = jwt.sign(
+      // the information 
       {
         id:existingUser.id,
         email:existingUser.email,
       },
+      // privateKey on different microservices
       process.env.JWT_KEY!
     );
     // Store it on session object
