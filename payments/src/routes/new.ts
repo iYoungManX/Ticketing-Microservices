@@ -28,7 +28,7 @@ router.post(
     if (!order) {
       throw new NotFoundError();
     }
-
+    
     if (order.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
@@ -36,7 +36,7 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError("Cannot pay for an cancelled order");
     }
-
+    // call stripe.charges.create
     const charge = await stripe.charges.create({
       currency: "usd",
       amount: order.price * 100,

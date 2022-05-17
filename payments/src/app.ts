@@ -15,7 +15,7 @@ app.use(
     secure: process.env.NODE_ENV !== "test",
   })
 );
-
+// validate the currentUser by JWT
 app.use(currentUser);
 app.use(CreateChargeRouter);
 
