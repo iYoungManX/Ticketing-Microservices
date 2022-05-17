@@ -19,7 +19,10 @@ app.use(
   cookieSession({
     // if the cookie is signed?
     signed: false,
+<<<<<<< HEAD
     // do we only accept https?
+=======
+>>>>>>> 56f327e704d7f6cb12672adbd7ead0039c95f8c4
     secure: false,
   })
 );
